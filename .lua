@@ -36,8 +36,8 @@ local function setTable(m,f)
   table.insert(m,f)
 end
 
-for i = 1,62 do
-  setTable(tostring(i),var.map.table)
+for i = 1,62 do --table.insert(tbl,v.Name)
+  setTable(var.map.table,tostring(i))
 end
 
 local function children(path,f)
