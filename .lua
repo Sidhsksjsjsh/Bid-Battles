@@ -97,7 +97,7 @@ T2:Toggle("Auto sell all ur furniture",false,function(value)
     while wait() do
       if var.plots.sf == false then break end
       children(workspace.Plots,function(r)
-          if r.Owner.Value == player.self.Name
+          if r.Owner.Value == player.self.Name then
               descendants(r["Furniture"],function(v)
                     game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer("1",v,true)
               end)
