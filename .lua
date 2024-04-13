@@ -97,13 +97,11 @@ T2:Toggle("Auto sell all ur furniture",false,function(value)
     while wait() do
       if var.plots.sf == false then break end
       children(workspace.Plots,function(r)
-          children(r,function(i)
-              if i.Name == "Owner" and i.Value == player.self.Name then
-                descendants(r["Furniture"],function(v)
+          if r.Owner.Value == player.self.Name
+              descendants(r["Furniture"],function(v)
                     game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer("1",v,true)
-                end)
-              end
-          end)
+              end)
+          end
       end)
     end
 end)
@@ -113,13 +111,11 @@ T2:Toggle("Auto accept offers",false,function(value)
     while wait() do
       if var.plots.ao == false then break end
       children(workspace.Plots,function(r)
-          children(r,function(i)
-              if i.Name == "Owner" and i.Value == player.self.Name then
-                descendants(r["Furniture"],function(v)
+          if r.Owner.Value == player.self.Name then
+            descendants(r["Furniture"],function(v)
                     game:GetService("ReplicatedStorage")["Events"]["Shop"]["AcceptOfferServer"]:FireServer(v)
-                end)
-              end
-          end)
+            end)
+          end
       end)
     end
 end)
