@@ -68,7 +68,9 @@ T1:Toggle("Auto bid",false,function(value)
     var.bid = false 
     while wait() do
       if var.bid == false then break end
-        game:GetService("ReplicatedStorage")["Events"]["Auctions"]["PlaceBid"]:InvokeServer(125)
+      if player.self.PlayerGui:FindFirstChild("Bidding") then
+        game:GetService("ReplicatedStorage")["Events"]["Auctions"]["PlaceBid"]:InvokeServer(tonumber(player.self.PlayerGui.Bidding.SpeechBubble.TextLabel.Text:gsub("$",""):gsub("going once",""):gsub("going twice",""):gsub("...",""))) --125
+      end
     end
 end)
 
@@ -92,16 +94,18 @@ T1:Button("End tutorial",function(value)
     game:GetService("ReplicatedStorage")["Events"]["Tutorial"]["EndTutorial"]:FireServer()
 end)
 
+local tstr = 0
 T2:Toggle("Auto sell all ur furniture",false,function(value)
     var.plots.sf = value
+    if value == false then
+      tstr = 0
+    end
+    
     while wait() do
       if var.plots.sf == false then break end
-      children(workspace.Plots,function(r)
-          if r.Owner.Value == player.self.Name then
-              descendants(r["Furniture"],function(v)
-                    game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer("1",v,true)
-              end)
-          end
+      tstr = tstr + 1
+      descendants(workspace.Plots[player.self.NonSaveVars.OwnsPlot.Value]["Furniture"],function(v)
+            game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer(tostring(tstr),v.Parent,true)
       end)
     end
 end)
@@ -110,12 +114,8 @@ T2:Toggle("Auto accept offers",false,function(value)
     var.plots.ao = value
     while wait() do
       if var.plots.ao == false then break end
-      children(workspace.Plots,function(r)
-          if r.Owner.Value == player.self.Name then
-            descendants(r["Furniture"],function(v)
-                    game:GetService("ReplicatedStorage")["Events"]["Shop"]["AcceptOfferServer"]:FireServer(v)
-            end)
-          end
+      descendants(workspace.Plots[player.self.NonSaveVars.OwnsPlot.Value]["Furniture"],function(v)
+            game:GetService("ReplicatedStorage")["Events"]["Shop"]["AcceptOfferServer"]:FireServer(v.Parent)
       end)
     end
 end)
