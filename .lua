@@ -69,7 +69,7 @@ T1:Toggle("Auto bid",false,function(value)
     while wait() do
       if var.bid == false then break end
       if player.self.PlayerGui:FindFirstChild("Bidding") then
-        game:GetService("ReplicatedStorage")["Events"]["Auctions"]["PlaceBid"]:InvokeServer(tonumber(player.self.PlayerGui.Bidding.SpeechBubble.TextLabel.Text:gsub("$",""):gsub("going once",""):gsub("going twice",""):gsub("...",""))) --125
+        game:GetService("ReplicatedStorage")["Events"]["Auctions"]["PlaceBid"]:InvokeServer(player.self.PlayerGui.Bidding.SpeechBubble.TextLabel.Text:gsub("$",""):gsub("going once...",""):gsub("going twice...","")) --125
       end
     end
 end)
@@ -105,7 +105,7 @@ T2:Toggle("Auto sell all ur furniture",false,function(value)
       if var.plots.sf == false then break end
       tstr = tstr + 1
       descendants(workspace.Plots[player.self.NonSaveVars.OwnsPlot.Value]["Furniture"],function(v)
-            game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer(tostring(tstr),v.Parent,true)
+            game:GetService("ReplicatedStorage")["Events"]["Shop"]["SellItemInShop"]:FireServer(tostring(tstr),v,true)
       end)
     end
 end)
@@ -115,7 +115,7 @@ T2:Toggle("Auto accept offers",false,function(value)
     while wait() do
       if var.plots.ao == false then break end
       descendants(workspace.Plots[player.self.NonSaveVars.OwnsPlot.Value]["Furniture"],function(v)
-            game:GetService("ReplicatedStorage")["Events"]["Shop"]["AcceptOfferServer"]:FireServer(v.Parent)
+            game:GetService("ReplicatedStorage")["Events"]["Shop"]["AcceptOfferServer"]:FireServer(v)
       end)
     end
 end)
